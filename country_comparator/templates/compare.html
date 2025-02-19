@@ -1,0 +1,87 @@
+{% extends "base.html" %}
+{% block title %}Comparison Results{% endblock %}
+{% block content %}
+    <h1>Comparison: {{ country1 }} vs. {{ country2 }}</h1>
+    <div class="row mb-4">
+        <div class="col-md-2 country-info"></div>
+        <div class="col-md-4 country-info">
+            <img src="{{ country1_info.flag }}" alt="{{ country1 }} Flag">
+            <div>
+                <h4>{{ country1 }}</h4>
+                <p>{{ country1_info.location }}</p>
+            </div>
+        </div>
+        <div class="col-md-2 country-info"></div>
+        <div class="col-md-4 country-info">
+            <img src="{{ country2_info.flag }}" alt="{{ country2 }} Flag">
+            <div>
+                <h4>{{ country2 }}</h4>
+                <p>{{ country2_info.location }}</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Country 1 Table -->
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th style="text-align: right;">Indicator</th>
+                        <th style="text-align: right;">Value</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, data in indicators1.items() %}
+                        <tr>
+                            <td style="text-align: right;">{{ key }}</td>
+                            <td style="text-align: right; position: relative;
+                                {% if data.value is not none %}
+                                    background: linear-gradient(to left, {{ country1_info.primary_color }}80 {{ data.percentage }}%, transparent {{ data.percentage }}%);
+                                {% endif %}">
+                                {% if data.value is not none %}
+                                    {{ data.value }} {{ data.unit }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Country 2 Table -->
+        <div class="col-md-6">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                        <th>Value</th>
+                        <th>Indicator</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for key, data in indicators2.items() %}
+                        <tr>
+                            <td style="position: relative;
+                                {% if data.value is not none %}
+                                    background: linear-gradient(to right, {{ country2_info.primary_color }}80 {{ data.percentage }}%, transparent {{ data.percentage }}%);
+                                {% endif %}">
+                                {% if data.value is not none %}
+                                    {{ data.value }} {{ data.unit }}
+                                {% else %}
+                                    N/A
+                                {% endif %}
+                            </td>
+                            <td>{{ key }}</td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="col-12 text-center mt-3">
+            <a href="/" class="btn btn-secondary">Back</a>
+        </div>
+    </div>
+{% endblock %}
