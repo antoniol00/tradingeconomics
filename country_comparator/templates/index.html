@@ -1,28 +1,46 @@
 {% extends "base.html" %}
 {% block title %}Home - Compare Countries{% endblock %}
-{% block content %}
-    <h1>Compare Economic Indicators</h1>
-    <form method="POST" action="/">
-        <div class="mb-3">
-            <label for="country1" class="form-label">First country:</label>
-            <select id="country1" name="country1" class="form-select" required>
-                <option value="">Select Country</option>
-                {% for country in countries %}
-                    <option value="{{ country }}">{{ country }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <div class="mb-3">
-            <label for="country2" class="form-label">Second country:</label>
-            <select id="country2" name="country2" class="form-select" required>
-                <option value="">Select Country</option>
-                {% for country in countries %}
-                    <option value="{{ country }}">{{ country }}</option>
-                {% endfor %}
-            </select>
-        </div>
-        <button type="submit" class="btn btn-primary">Compare</button>
-    </form>
+{% block content %}   
+
+<div class="d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="text-center">
+        <h1><i class="fa-solid fa-chart-column"></i> Compare Economic Indicators</h1>
+        <form method="POST" action="/">
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <label for="country1" class="form-label">
+                        <i class="fa-solid fa-flag"></i> First country:
+                    </label>
+                    <select id="country1" name="country1" class="form-select" required>
+                        <option value="">Select Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country.name }}" data-img-src="{{ country.flag }}">
+                                {{ country.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="country2" class="form-label">
+                        <i class="fa-solid fa-flag"></i> Second country:
+                    </label>
+                    <select id="country2" name="country2" class="form-select" required>
+                        <option value="">Select Country</option>
+                        {% for country in countries %}
+                            <option value="{{ country.name }}" data-img-src="https://flagcdn.com/se.svg">
+                                {{ country.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">
+                <i class="fa-solid fa-magnifying-glass"></i> Compare
+            </button>
+        </form>
+    </div>
+</div>
+
 
     <script>
         function updateSelects() {
@@ -32,13 +50,13 @@
             const selected1 = select1.value;
             const selected2 = select2.value;
 
-            // Actualiza options del select2
+            // Update options for select2
             for (const option of select2.options) {
                 if (option.value !== "") {
                     option.disabled = (option.value === selected1);
                 }
             }
-            // Actualiza options del select1
+            // Update options for select1
             for (const option of select1.options) {
                 if (option.value !== "") {
                     option.disabled = (option.value === selected2);

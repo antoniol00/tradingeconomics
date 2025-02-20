@@ -1,5 +1,6 @@
 # config.py
 TRADING_ECONOMICS_API_KEY = ''  # Replace with your actual API key
+SECRET_KEY = ''  # Change this to a more secure key for production
 
 # For our four available countries, we set flag URLs and a brief location (capital)
 COUNTRY_INFO = {
